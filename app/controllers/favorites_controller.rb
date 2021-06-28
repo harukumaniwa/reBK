@@ -3,8 +3,9 @@ class FavoritesController < ApplicationController
     book = Book.find(params[:book_id])
     favo = Favorite.new(book_id: book.id)
     favo.user_id = current_user.id
-    favo.save
+    favo.save!
     redirect_back(fallback_location: root_path)
+
   end
   
   def destroy

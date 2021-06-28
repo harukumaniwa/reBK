@@ -4,14 +4,14 @@ class BooksController < ApplicationController
     @post_books = Book.all
     @new = Book.new
     @book = Book.new
-    
-    # @favo = Favorite.where(book_id: )
   end
   
   def show
     @book = Book.find(params[:id])
     @user = User.find(@book.user_id)
     @new = Book.new
+    @comment = BookComment.new
+    @post_com = BookComment.where(book_id: @book.id)
   end
   
   def create

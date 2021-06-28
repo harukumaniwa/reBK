@@ -23,20 +23,40 @@
           <% end %>
           <% if @book.favorited_by?(current_user) %>
             <td>
-              <%= link_to book_favorites_path(@book.id), style:"color: red;", method: :delete do %>
-                <i class="fas fa-heart"></i> <%= Favorite.where(book_id: @book.id).count %>
+              <%= link_to book_favorites_path(@book), method: :delete, class: "fas fa-heart", style: "color: red;" do %>
+                <%= @book.favorites.count %>
               <% end %>
             </td>
           <% else %>
             <td>
-              <%= link_to book_favorites_path(@book.id), method: :post do %>
-                <i class="far fa-heart"></i> <%= Favorite.where(book_id: @book.id).count %>
+              <%= link_to book_favorites_path(@book), method: :post, class: "far fa-heart" do %>
+                <%= @book.favorites.count %>
               <% end %>
             </td>
           <% end %>
-          <td>コメント数: カウント</td>
+          <td>コメント数: <%= @post_com.count %></td>
         </tbody>
       </table>
+      <div class="com">
+        <% @post_com.each do |pc| %>
+          <td>
+            <%= attachment_image_tag User.find(pc.user_id), :profile_image, :fill, 40, 40, fallback: "no_image.jpg", size:'40x40' %>
+            <%= link_to User.find(pc.user_id).name, user_path(pc.user_id) %>
+          </td>
+          <td><%= pc.comment %></td>
+          <% if current_user.id == pc.user_id %>
+            <td><%= link_to "Destroy", book_book_comment_path(pc.book_id, pc.id), method: :delete, class:"btn btn-sm btn-danger" %></td>
+          <% end %>
+          <br/>
+          <br/>
+        <% end %>
+      </div>
+      <div class="form">
+        <%= form_with model: [@book, @comment], local:true, method: :post do |f| %>
+          <%= f.text_area :comment, class:"form-control w-100" %><br />
+          <%= f.submit "送信", class:"btn btn-sm btn-success" %>
+        <% end %>
+      </div>
     </div>
   </div>
 </div>

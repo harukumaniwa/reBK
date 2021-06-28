@@ -47,7 +47,7 @@
                   <% end %>
                 </td>
               <% end %>
-              <td>コメント数: カウント</td>
+              <td>コメント数: <%= BookComment.where(book_id: pb.id).count %></td>
             </tr>
           <% end %>
         </tbody>
