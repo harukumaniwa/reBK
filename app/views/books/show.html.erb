@@ -1,0 +1,28 @@
+<div class="container">
+  <div class="row">
+    <div class="col-md-3">
+      <%= render partial: "layouts/form" %>
+    </div>
+    <div class="col-md-8 offset-md-1">
+      <h2>Book detail</h2>
+      <table class="table">
+        <tbody>
+          <td>
+            <%= attachment_image_tag @user, :profile_image, :fill, 40, 40, fallback: "no_image.jpg", size:'40x40' %><br />
+            <%= link_to @user.name, user_path(@user) %>
+          </td>
+          <td>
+            <%= @book.title %>
+          </td>
+          <td>
+            <%= @book.body %>
+          </td>
+          <% if @user.id == current_user.id %>
+            <td><%= link_to "Edit", edit_book_path, class:"btn btn-sm btn-success" %></td>
+            <td><%= link_to "Destroy", book_path(@book), method: :delete, class:"btn btn-danger", data: { confirm: "本当に削除してもよろしいですか？" } %></td>
+          <% end %>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</div>
