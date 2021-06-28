@@ -4,6 +4,8 @@ class BooksController < ApplicationController
     @post_books = Book.all
     @new = Book.new
     @book = Book.new
+    
+    # @favo = Favorite.where(book_id: )
   end
   
   def show

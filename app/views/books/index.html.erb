@@ -34,6 +34,20 @@
               </td>
               <td><%= link_to pb.title, book_path(pb.id) %> </td>
               <td><%= pb.body %></td>
+              <% if pb.favorited_by?(current_user) %>
+                <td>
+                  <%= link_to book_favorites_path(pb.id), style:"color: red;", method: :delete do %>
+                    <i class="fas fa-heart"></i> <%= Favorite.where(book_id: pb.id).count %>
+                  <% end %>
+                </td>
+              <% else %>
+                <td>
+                  <%= link_to book_favorites_path(pb.id), method: :post do %>
+                    <i class="far fa-heart"></i> <%= Favorite.where(book_id: pb.id).count %>
+                  <% end %>
+                </td>
+              <% end %>
+              <td>コメント数: カウント</td>
             </tr>
           <% end %>
         </tbody>
